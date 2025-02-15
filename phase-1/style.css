@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    background: #131825;
+    height: 100%;
+    width: 100%;
+    color: #e7defe;
+}
+
+body {
+    min-height: 100%;
+    font-family: 'PlusJakartaSans', sans-serif;
+}
+
+@font-face {
+    font-family: 'PlusJakartaSans';
+    src: url(./PlusJakartaSans-VariableFont_wght.ttf);
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+.navContainer {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.brand > img {
+    width: 20px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+}

@@ -58,6 +58,19 @@ nav {
     top: 0; */
 }
 
+.navLinks:first-of-type a::after {
+    width: 0;
+    content: '';
+    height: 1px;
+    display: block;
+    background: white;
+    transition: width 0.3s;
+}
+
+.navLinks:first-of-type a:hover::after {
+    width: 100%;
+}
+
 .navContainer {
     display: flex;
     justify-content: space-between;
@@ -221,9 +234,160 @@ section {
     background: #f3f5f7;
     border-radius: 16px;
     position: relative;
+    display: flex;
 }
 
-.howItWorksItem > p {
+.howItWorksItem > .illustration > .hiwContainer {
+    display: flex;
+    flex-direction: column;
+    padding-top: 28px;
+    padding-left: 28px;
+    background: white;
+    margin-top: 16%;
+    margin-left: 16%;
+    height: calc(100% - 16%);
+    width: calc(100% - 16%);
+    border-top-left-radius: 12px;
+    color: black;
+    text-align: left;
+}
+
+.howItWorksItem > .illustration > .location > p {
+    font-size: 80%;
+    margin-bottom: 4%;
+    font-weight: 500;
+}
+
+.howItWorksItem > .illustration > .location > .input {
+    padding: 6%;
+    font-size: 80%;
+    background-color: #f3f5f7;
+    border: 0;
+    outline: none;
+    margin-bottom: 6%;
+    border-radius: 4%;
+    display: flex;
+    gap: 3px;
+}
+
+.blinker {
+    height: 100%;
+    width: 1px;
+    background: black;
+    opacity: 0;
+}
+
+.howItWorksItem > .illustration:hover .blinker {
+    animation: blink 1.5s linear infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    25% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 0;
+    }
+    95% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.skeletonCard {
+    background-color: #f3f5f7;
+    flex: 1;
+    width: 66.6%;
+    border-radius: 4%;
+    padding-top: 13%;
+    padding-left: 8.9%;
+}
+
+.skeletonCard > .title {
+    width: 79%;
+    background: #e1e7ed;
+    height: 12%;
+    border-radius: 100rem;
+    margin-bottom: 6.4%;
+}
+
+.skeletonCard > div {
+    background: #e1e7ed;
+    height: 6.4%;
+    flex-shrink: 0;
+    border-radius: 100rem;
+}
+
+.skeletonCard > .line {
+    width: 42%;
+    margin-bottom: 9.6%;
+}
+
+.skeletonCard > .line2 {
+    width: 72.3%;
+}
+
+.fwasher {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1%;
+    text-align: center;
+    padding: 0 !important;
+}
+
+.fwasher p {
+    color: var(--buttonPrimaryColor);
+    font-weight: 500;
+}
+
+.fwasher .num {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+}
+
+.fwasher img {
+    width: 55%;
+}
+
+.fwasher .btnPrimary {
+    padding-top: 4%;
+    padding-bottom: 4%;
+}
+
+.illustration:hover .hiwContainer.fwasher svg {
+    stroke-dasharray: 100;
+    animation: animateSvg 10s linear infinite;
+}
+
+@keyframes animateSvg {
+    from {
+        stroke-dashoffset: 0;
+    } to {
+        stroke-dashoffset: 1000;
+    }
+}
+
+.illustration:hover > .fwasher:not(.hiwContainer) .drum-anim {
+    transform-origin: 50% 54%;
+    animation: 2s animateWasherInside infinite linear;
+}
+
+@keyframes animateWasherInside {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg)
+    }
+}
+
+.howItWorksItem > figcaption {
     font-size: 20px;
     width: 80%;
     margin-top: 17px;
@@ -277,7 +441,15 @@ section {
     text-align: start;
 }
 
-.illustration {
+.reasonItem > .illustration > img {
+    transition: transform .1s ease-in-out
+}
+
+.reasonItem:hover > .illustration > img {
+    transform: scale(1.25);
+}
+
+.reasonItem .illustration {
     width: 48px;
     height: 48px;
     aspect-ratio: 1;
@@ -336,6 +508,14 @@ section {
     justify-content: flex-start;
 }
 
+#download .buttonsContainer img {
+    transition: transform .1s ease-in-out;
+}
+
+#download .buttonsContainer img:hover {
+    transform: scale(1.05);
+}
+
 #download .TitleDescription {
     font-size: 19px;
     margin-top: 20px;
@@ -362,15 +542,21 @@ section {
     padding: 36px 32px;
     text-align: start;
     border-radius: 12px;
-    border: 1px solid #c3d4e9;
+    position: relative;
+    background: white;
+    z-index: 50;
+    outline: 1px solid #c3d4e9;
+    transition: transform 0.3s ease, outline 0.3s ease;
 }
 
-.borderPrimary {
-    border: 2px solid var(--buttonPrimaryColor);
+.locationCard:hover {
+    transform: translate(0, -8px);
+    outline: 2px solid var(--buttonPrimaryColor);
 }
 
 .locationCard hr {
     border: 0;
+    margin-top: auto;
     border-bottom: 2px solid #e8edf2;
 }
 
@@ -412,4 +598,10 @@ footer {
 
 .footerContainer > p {
     color: #525e72;
+}
+
+
+
+@media screen and (max-width: 900px) {
+
 }

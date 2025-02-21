@@ -1,19 +1,46 @@
+:root {
+    --buttonPrimaryColor: #3d81db;
+    --buttonSecondaryColor: #1a202c;
+    --bgColor1: #0d121f;
+}
+
+
 * {
     box-sizing: border-box;
+    font-family: 'PlusJakartaSans', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 body, html {
     margin: 0;
     padding: 0;
-    background: #131825;
-    height: 100%;
+    background: #0d121f;
     width: 100%;
     color: #e7defe;
+    font-weight: 300;
 }
 
 body {
     min-height: 100%;
-    font-family: 'PlusJakartaSans', sans-serif;
+    height: max-content;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+button {
+    border: 0;
+    color: inherit;
+}
+
+body > * {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+b {
+    font-weight: 600;
 }
 
 @font-face {
@@ -24,21 +51,365 @@ body {
 nav {
     display: flex;
     justify-content: center;
+    height: 100px;
+    background: var(--bgColor1);
+    border-bottom: 1px solid #343843;
+    /* position: sticky;
+    top: 0; */
 }
 
 .navContainer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     max-width: 1200px;
-    padding: 0 20px;
+    padding: 0 16px;
     width: 100%;
 }
 
-.brand > img {
-    width: 20px;
+.brand {
+    height: 32px;
 }
 
-.brand {
+.navLinks, .navRight {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+    align-items: center;
+}
+
+.navLinks a {
+    text-decoration: none;
+    color: white;
+}
+
+.btnPrimary {
+    background: var(--buttonPrimaryColor);
+    border-radius: 9999px;
+    padding: 16px 24px;
+    color: white;
+    font-size: 16px;
+}
+
+.btnSecondary {
+    background: var(--buttonSecondaryColor);
+    border-radius: 9999px;
+    padding: 18px 22px;
+    line-height: 1;
+    color: #aebdd2;
+    font-size: 16px;
+}
+
+.navLinks .download {
+    color: #acbcd0;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#hero {
+    height: 600px;
+    max-height: max-content;
+    background: var(--bgColor1);
+}
+
+#hero h1 {
+    font-size: 70px;
+    text-align: center;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 0;
+    background-image: linear-gradient(to bottom, #fcfdfe, #dde6f2 40%, #bfcfe6, #9fb8d9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+#hero p {
+    font-size: 20px;
+    font-weight: 300;
+    text-align: center;
+    line-height: 1.5;
+    margin: 0;
+    margin-top: 44px;
+    color: #90a3bf;
+}
+
+#hero .genericContainer {
+    max-width: 825px;
+}
+
+.buttonsContainer {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+#about {
+    height: 460px;
+    background: url(./assets/laundromat-with-girl-legs.png) no-repeat center/cover white;
+}
+
+.genericContainer {
+    z-index: 50;
+    text-align: center;
+}
+
+.SecondaryTitle {
+    color: #3d81db;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 19px;
+}
+
+.PrimaryTitle {
+    font-size: 38px;
+    margin: 0;
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+.white {
+    color: white;
+}
+
+.black {
+    color: black;
+}
+
+#about p {
+    max-width: 785px;
+    font-size: 17px;
+    line-height: 1.6;
+    margin-top: 36px;
+}
+
+.TitleDescription {
+    color: #90a3bf;
+    font-size: 20px;
+    margin: 0 auto;
+    margin-top: 7px;
+}
+
+#how-it-works {
+    height: 800px;
+}
+
+.howItWorksItems {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    max-width: 1018px;
+    width: 100%;
+}
+
+.howItWorksItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.howItWorksItem > .illustration {
+    width: 200px;
+    height: 200px;
+    background: #f3f5f7;
+    border-radius: 16px;
+    position: relative;
+}
+
+.howItWorksItem > p {
+    font-size: 20px;
+    width: 80%;
+    margin-top: 17px;
+    line-height: 1.5;
+}
+
+.howItWorksItem .illustration::after {
+    content: attr(index);
+    position: absolute;
+    bottom: 100%;
+    right: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 500;
+    transform: translate(50%, 50%);
+    width: 50px;
+    height: 50px;
+    background: var(--buttonPrimaryColor);
+    border: 6px solid #0d121f;
+    border-radius: 50%;
+}
+
+#how-it-works .buttonsContainer {
+    margin-top: 64px;
+}
+
+#why-us {
+    background: white;
+    height: 630px;
+}
+
+#why-us .TitleDescription {
+    max-width: 700px;
+}
+
+.reasonsContainer {
+    display: flex;
+    gap: 32px;
+    margin-top: 64px;
+    max-width: 900px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.reasonItem {
+    display: flex;
+    gap: 32px;
+    width: 434px;
+    text-align: start;
+}
+
+.illustration {
+    width: 48px;
+    height: 48px;
+    aspect-ratio: 1;
+    background: var(--buttonPrimaryColor);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    user-select: none;
+}
+
+.reasonItem h3 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 22px
+}
+
+.reasonItem p {
+    color: #596780;
+}
+
+
+#download {
+    justify-content: center;
+    align-items: unset;
+    gap: 40px;
+    height: 570px;
+}
+
+.halfContainer {
+    display: flex;
+    flex-direction: column;
+    width: 555px;
+    flex-shrink: 0;
+    margin: auto 0 auto auto;
+}
+
+#download .PrimaryTitle {
+    max-width: 250px;
+    width: 100%;
+}
+
+#download > img {
+    flex: 1;
+    max-width: 52vw;
+    margin-top: 72px;
+    border-top-left-radius: 40px;
+    border-top: 10px solid #3d414c;
+    border-left: 10px solid #3d414c;
+    object-fit: cover;
+}
+
+#download .buttonsContainer {
+    justify-content: flex-start;
+}
+
+#download .TitleDescription {
+    font-size: 19px;
+    margin-top: 20px;
+}
+
+#locations {
+    background: white;
+    height: 700px;
+}
+
+.locationCards {
+    margin-top: 60px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+}
+
+.locationCard {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    flex: 1;
+    padding: 36px 32px;
+    text-align: start;
+    border-radius: 12px;
+    border: 1px solid #c3d4e9;
+}
+
+.borderPrimary {
+    border: 2px solid var(--buttonPrimaryColor);
+}
+
+.locationCard hr {
+    border: 0;
+    border-bottom: 2px solid #e8edf2;
+}
+
+footer {
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #131825;
+}
+
+#footerContainer {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#footerLinks ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+}
+
+#footerLinks ul li {
+    display: flex;
+}
+
+#footerLinks ul li a {
+    color: #5daaff;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.vr {
+    border-right: 1px solid #263852;
+}
+
+.footerContainer > p {
+    color: #525e72;
 }

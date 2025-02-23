@@ -12,6 +12,11 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
 body, html {
     margin: 0;
     padding: 0;
@@ -32,6 +37,7 @@ body {
 button {
     border: 0;
     color: inherit;
+    cursor: pointer;
 }
 
 body > * {
@@ -133,6 +139,8 @@ section {
     height: 600px;
     max-height: max-content;
     background: var(--bgColor1);
+    overflow: hidden;
+    position: relative;
 }
 
 #hero h1 {
@@ -157,6 +165,39 @@ section {
     color: #90a3bf;
 }
 
+#hero .light {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 0;
+    height: 1100px;
+    width: 1100px;
+    z-index: 1;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1) 30%, transparent 65%);
+}
+
+#hero .circle1 {
+    width: 870px;
+    height: 870px;
+    position: absolute;
+    border-radius: 99999px;
+    top: 0;
+    left: calc(50vw + 290px);
+    transform: translate(-0%, -50%);
+    border: 100px solid #191e2a;
+}
+
+#hero .circle2 {
+    width: 800px;
+    height: 800px;
+    position: absolute;
+    border-radius: 99999px;
+    bottom: 0;
+    left: calc(50vw - 600px);
+    transform: translate(-93.5%, 52.5%);
+    border: 100px solid #191e2a;
+}
+
 #hero .genericContainer {
     max-width: 825px;
 }
@@ -171,6 +212,7 @@ section {
 #about {
     height: 460px;
     background: url(./assets/laundromat-with-girl-legs.png) no-repeat center/cover white;
+    z-index: 1;
 }
 
 .genericContainer {
@@ -529,7 +571,7 @@ section {
 }
 
 #locations {
-    background: white;
+    background: linear-gradient(to bottom, white, #ecf5ff);
     height: 700px;
 }
 
@@ -544,14 +586,14 @@ section {
 .locationCard {
     display: flex;
     flex-direction: column;
-    gap: 36px;
+    gap: 28px;
     flex: 1;
-    padding: 36px 32px;
+    padding: 32px;
     text-align: start;
     border-radius: 12px;
     position: relative;
-    background: white;
     z-index: 10;
+    background: linear-gradient(to bottom, #ffffff, #f2f8ff);
     outline: 1px solid #c3d4e9;
     transition: transform 0.3s ease, outline 0.3s ease;
 }
@@ -565,6 +607,22 @@ section {
     border: 0;
     margin-top: auto;
     border-bottom: 2px solid #e8edf2;
+}
+
+.locationCard h4, .locationCard b {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.locationCard p {
+    font-weight: 400;
+    line-height: 1.5;
+    font-size: 16px;
+}
+
+#locations .btnPrimary {
+    margin-top: 50px;
 }
 
 footer {
@@ -596,6 +654,7 @@ footer {
 #footerLinks ul li a {
     color: #5daaff;
     font-weight: 500;
+    font-size: 15px;
     text-decoration: none;
     width: 100%;
 }
@@ -604,11 +663,16 @@ footer {
     border-right: 1px solid #263852;
 }
 
-.footerContainer > p {
-    color: #525e72;
+#footerContainer > p {
+    color: #8092ab;
+    font-weight: 400;
 }
 
 #menuOpened, #mobileNav {
+    display: none;
+}
+
+#footerContainer hr {
     display: none;
 }
 
@@ -720,7 +784,7 @@ footer {
     #locations {
         height: auto;
         padding: 12.9vw 3.4vw;
-        padding-bottom: 12.6vw
+        padding-bottom: 12.6vw;
     }
 
     .locationCards {
@@ -767,19 +831,21 @@ footer {
         display: none;
     }
 
-    hr {
+    #footerContainer hr {
+        display: flex;
         width: 100%;
         border: 0;
         border-bottom: 1px solid #263852;
     }
 
-    #footerContainer > p {
-        color: #364053;
-    }
-
     /* NAVBAR RESPONSIVITY */
     nav {
         height: 64px;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 64px;
     }
 
     .navLinks {
@@ -952,6 +1018,21 @@ footer {
 
     .mobileNavContainer .navLinks .btnPrimary {
         padding: 8px 16px;
+    }
+
+    #hero .light {
+        display: none;
+    }
+    
+    #hero .circle1 {
+        display: none;
+    }
+
+    #hero .circle2 {
+        left: 50vw;
+        transform: translate(-50%, 61%);
+        width: 165vw;
+        height: 165vw
     }
 }
 

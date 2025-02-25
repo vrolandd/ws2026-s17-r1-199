@@ -41,7 +41,7 @@ export default function ServicesScreen({ nextAllowed, visible }: { nextAllowed: 
             <h3>Parking</h3>
 
             <RadioButtonProvider>
-                <RadioButton name="parking" value="Easy" label="Easy" defaultChecked />
+                <RadioButton name="parking" value="Easy" label="Easy" />
                 <RadioButton name="parking" value="Medium" label="Medium" />
                 <RadioButton name="parking" value="Hard" label="Hard" />
             </RadioButtonProvider>

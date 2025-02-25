@@ -1,7 +1,7 @@
 import { Dispatch, ReactElement, SetStateAction, useEffect } from "react";
 import { GetFloorplanValues, GetFormValues } from "../tools";
 
-export default function ExportScreen({ nextAllowed, visible }: { nextAllowed: Dispatch<SetStateAction<() => boolean>>, visible: boolean }): ReactElement {
+export default function ExportScreen({ nextAllowed, visible, startOver }: { nextAllowed: Dispatch<SetStateAction<() => boolean>>, visible: boolean, startOver: () => void }): ReactElement {
     useEffect(() => {
         if (visible) nextAllowed(() => () => false)
     }, [ visible ])
@@ -36,7 +36,7 @@ export default function ExportScreen({ nextAllowed, visible }: { nextAllowed: Di
             
             <hr />
             
-            <button className="btn">Start over</button>
+            <button className="btn" onClick={startOver}>Start over</button>
         </main>
     )
 }

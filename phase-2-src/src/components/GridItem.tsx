@@ -1,4 +1,4 @@
-import { MouseEvent, ReactElement, useState } from "react";
+import { MouseEvent, ReactElement, useEffect, useRef, useState } from "react";
 
 import washingMachine from '../assets/washing-machine.svg'
 import armchair from '../assets/armchair.svg'
@@ -50,23 +50,37 @@ export default function GridItem({
     // The setType function is being used for changing the tpye of the grid item, because it helps us to avoid unneccessary re-renders. See more details about this in optimisations.md.
     const handleDropEvent = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        setType(onDrop(index));
+        updateType(onDrop(index));
 
         setDroppedOver(false);
     }
 
+    const inputRef = useRef<HTMLInputElement | null>(null);
+
+    const updateType = (type: GridItemType) => {
+        setType(type)
+        console.log(type)
+        if (!inputRef.current) return;
+        const name = inputRef.current.name;
+
+        let config = JSON.parse(window.sessionStorage.getItem('config') as string);
+        config[name] = type;
+
+        window.sessionStorage.setItem('config', JSON.stringify(config))
+    }
+
     const handleDoubleClick = () => {
-        setType(onType(index, "wall"))
+        updateType(onType(index, "wall"))
     }
 
     const handleClick = () => {
-        setType(onType(index, "empty"))
+        updateType(onType(index, "empty"))
     }
 
     const handleContextMenu = (e: MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
 
-        setType(onType(index, "entrance"))
+        updateType(onType(index, "entrance"))
     }
 
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -80,6 +94,19 @@ export default function GridItem({
 
         setDroppedOver(false);
     }
+
+
+    useEffect(() => {
+        const sst = window.sessionStorage.getItem('config') as string | null;
+
+        if (!sst) {
+            return setType(defaultType);
+        }
+
+        const config = JSON.parse(sst);
+        config[`grid[${index}]`] && setType(config[`grid[${index}]`])
+    }, [ index ])
+
 
     return (
         <div
@@ -124,7 +151,7 @@ export default function GridItem({
 
             <span>{ getTypeName(type) }</span>
 
-            <input type="hidden" name={`grid[${index}]`} value={type} />
+            <input type="hidden" ref={inputRef} name={`grid[${index}]`} value={type} />
             </>
         </div>
     )

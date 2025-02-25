@@ -11,6 +11,23 @@ type ConfigurationItems = {
     to: string;
 }
 
+export const Basic_Configuration: BasicConfiguration = {
+    accessibleEntry: "off",
+    address: "",
+    backgroundMusic: "off",
+    city: "",
+    customerService: "off",
+    description: "",
+    freeWiFi: "off",
+    from: "",
+    loungeArea: "off",
+    openAt: "everyday",
+    parking: "Easy",
+    postalCode: "",
+    sudsyname: "",
+    to: ""
+};
+
 export type BasicConfiguration = ConfigurationItems & {
     accessibleEntry: "on" | "off";
     backgroundMusic: "on" | "off";
@@ -49,22 +66,7 @@ export function FloormapValidator(floorMap: GridItemType[]): string {
 }
 
 export function GetFormValues(): FinalConfiguration {
-    let formValues: BasicConfiguration = {
-        accessibleEntry: "off",
-        address: "",
-        backgroundMusic: "off",
-        city: "",
-        customerService: "off",
-        description: "",
-        freeWiFi: "off",
-        from: "",
-        loungeArea: "off",
-        openAt: "",
-        parking: "Easy",
-        postalCode: "",
-        sudsyname: "",
-        to: ""
-    };
+    let formValues = { ...Basic_Configuration } as BasicConfiguration;
 
     const forms = document.querySelectorAll('form');
 

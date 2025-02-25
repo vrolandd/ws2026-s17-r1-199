@@ -3,17 +3,18 @@ import minimize from './assets/minimize.svg'
 import check from './assets/check.svg'
 import InformationsScreen from './screens/1_Informations'
 import FloorPlanScreen from './screens/2_Floorplan'
-import { Dispatch, Fragment, ReactElement, SetStateAction, useRef, useState } from 'react'
+import { Dispatch, Fragment, ReactElement, SetStateAction, useEffect, useRef, useState } from 'react'
 import ServicesScreen from './screens/3_Services'
 import ExportScreen from './screens/4_Export'
+import { Basic_Configuration } from './tools'
 
-function GetScreen({ page, nextAllowed }: { page: number, nextAllowed: Dispatch<SetStateAction<() => boolean>> }): ReactElement {
+function GetScreen({ page, nextAllowed, startOver }: { page: number, nextAllowed: Dispatch<SetStateAction<() => boolean>>, startOver: () => void }): ReactElement {
     return (
         <>
         <InformationsScreen nextAllowed={nextAllowed} visible={page == 0} />
-        <FloorPlanScreen nextAllowed={nextAllowed} visible={page == 1}/>
-        <ServicesScreen nextAllowed={nextAllowed} visible={page == 2}/>
-        <ExportScreen nextAllowed={nextAllowed} visible={page == 3}/>
+        <FloorPlanScreen nextAllowed={nextAllowed} visible={page == 1} />
+        <ServicesScreen nextAllowed={nextAllowed} visible={page == 2} />
+        <ExportScreen nextAllowed={nextAllowed} visible={page == 3} startOver={startOver} />
         
         <main className='main' style={{ display: (page < 0 || page > 3) ? 'flex' : 'none' }}><h2>Missing screen.</h2></main>
         </>
@@ -22,7 +23,6 @@ function GetScreen({ page, nextAllowed }: { page: number, nextAllowed: Dispatch<
 
 export default function App() {
     const [ page, setPage ] = useState<number>(0);
-
     const [ nextAllowed, setNextAllowed ] = useState<() => boolean>(() => () => false);
     const [ inFullscreen, setInFullscreen ] = useState<boolean>(false);
 
@@ -36,6 +36,38 @@ export default function App() {
         }
 
         setInFullscreen(!inFullscreen)
+    }
+
+    useEffect(() => {
+        const sst = window.sessionStorage.getItem('config');
+        
+        if (!sst) {
+            window.sessionStorage.setItem('config', JSON.stringify(Basic_Configuration));
+            return setPage(0);
+        }
+
+        const config = JSON.parse(sst);
+        if (Object.keys(config).filter(x => x.startsWith('grid')).length == 0) {
+            setPage(0);
+        } else {
+            setPage(1);
+        }
+    }, [])
+
+    const startOver = () => {
+        window.sessionStorage.removeItem('config');
+
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.reset();
+        });
+
+        const gridItems = document.querySelectorAll('.grid > .grid-item');
+        gridItems.forEach(gridItem => {
+            gridItem.classList.value = 'grid-item empty empty';
+        }, [])
+
+        setPage(0);
     }
 
     return (
@@ -72,7 +104,11 @@ export default function App() {
                 </button>
             </header>
 
-            <GetScreen nextAllowed={setNextAllowed} page={page} />
+            <GetScreen
+                nextAllowed={setNextAllowed}
+                startOver={startOver}
+                page={page}
+            />
 
             {
                 page < 3 && (

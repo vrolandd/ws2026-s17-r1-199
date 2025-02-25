@@ -87,6 +87,10 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
         }
     }, [ visible ])
 
+    useEffect(() => {
+        submittedTimes.current = 0;
+    }, [ visible ])
+
     return (
         <form ref={infoForm} action="" className="main" name="informations" style={{ display: visible ? 'flex' : 'none' }}>
             <h2>Information about the Location</h2>
@@ -136,11 +140,10 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
             <Select
                 idAndName="openAt"
                 label="Open at"
-                defaultValue="everyday"
             >
                 <option value={"everyday"}>Every day</option>
                 <option value={"weekdays"}>Weekdays</option>
-                <option value={"everyday"}>Weekends</option>
+                <option value={"weekends"}>Weekends</option>
             </Select>
 
             <div className="input-row">

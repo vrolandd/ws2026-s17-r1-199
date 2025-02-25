@@ -1,5 +1,5 @@
-import { GridItemType } from "./components/GridItem";
-import { Grid_Columns } from "./config";
+import { getTypeName, GridItemType } from "./components/GridItem";
+import { Grid_Columns, Grid_Rows } from "./config";
 
 type ConfigurationItems = {
     address: string;
@@ -99,4 +99,29 @@ export function GetFormValues(): FinalConfiguration {
 
     console.log(final);
     return final;
+}
+
+export function GetFloorplanValues(): string {
+    const floorplan = document.querySelector('form[name=floorplan]') as HTMLFormElement;
+    const FD = new FormData(floorplan);
+
+    let floorplanValues: GridItemType[] = [];
+
+    for (let [_, val] of FD.entries()) {
+        floorplanValues.push(val as GridItemType);
+    }
+
+    let csv_string = "";
+
+    for (let i = 0; i < Grid_Rows; i++) {
+        console.log(i * Grid_Rows * Grid_Columns, (i * Grid_Rows * Grid_Columns) + Grid_Columns)
+        const row = floorplanValues.slice(i * Grid_Columns, (i * Grid_Columns) + Grid_Columns);
+        console.log(row);
+
+        csv_string += row.map(x => x == "empty" ? '-' : getTypeName(x)).join(",") + "\n";
+    }
+
+    csv_string = csv_string.trim();
+
+    return csv_string;
 }

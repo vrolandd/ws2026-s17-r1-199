@@ -41,7 +41,7 @@ export default function App() {
                                 <button
                                     onClick={() => { setPage(step) }}
                                     className={`step ${page > step ? 'done' : page == step ? 'current' : ''}`}
-                                    disabled={page != step}
+                                    disabled={page < step}
                                 >
                                     {
                                         page == 3 ? <img src={check} alt="Check" /> : step + 1

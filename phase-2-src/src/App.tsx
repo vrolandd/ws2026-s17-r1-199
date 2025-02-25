@@ -64,9 +64,7 @@ export default function App() {
 
         const gridItems = document.querySelectorAll('.grid > .grid-item');
         gridItems.forEach(gridItem => {
-            gridItem.innerHTML = '';
             gridItem.classList.value = 'grid-item empty empty';
-
             gridItem.querySelector('input')!.value = "empty";
         })
 

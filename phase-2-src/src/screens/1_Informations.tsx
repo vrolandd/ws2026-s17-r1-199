@@ -27,7 +27,7 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
                     }
                 }
             },
-            postalcode: {
+            postalCode: {
                 isValid: (value: string) => {
                     if (value.length != 4) {
                         return 'Postal code must be exactly 4 characters long.'
@@ -66,13 +66,15 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
     })
 
     useEffect(() => {
-        nextAllowed(() => () => {
-            if (!infoForm.current) return false;
-            const errors = checkFormValues(infoForm.current);
+        if (visible) {
+            nextAllowed(() => () => {
+                if (!infoForm.current) return false;
+                const errors = checkFormValues(infoForm.current);
 
-            return Object.entries(errors).map(x => x[1]).filter(x => x != "").length == 0;
-        })
-    }, [])
+                return Object.entries(errors).map(x => x[1]).filter(x => x != "").length == 0;
+            })
+        }
+    }, [ visible ])
 
     return (
         <form ref={infoForm} action="" className="main" style={{ display: visible ? 'flex' : 'none' }}>
@@ -95,9 +97,9 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
             <div className="input-row">
                 <Input
                     type='number'
-                    idAndName='postalcode'
+                    idAndName='postalCode'
                     label='Postal code'
-                    errorMessage={formErrors.postalcode}
+                    errorMessage={formErrors.postalCode}
                     onInteract={checkInput}
                 />
 
@@ -121,7 +123,7 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
             <h2>Operational hours</h2>
 
             <Select
-                idAndName="openat"
+                idAndName="openAt"
                 label="Open at"
                 defaultValue="everyday"
             >

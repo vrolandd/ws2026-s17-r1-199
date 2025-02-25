@@ -43,24 +43,34 @@ export default function FloorPlanScreen({ nextAllowed, visible }: { nextAllowed:
     }
 
     useEffect(() => {
-        nextAllowed(() => () => {
-            const ans = FloormapValidator(gridItemsRef.current)
-
-            setError(ans)
-            return ans == "";
-        })
-    }, [])
+        if (visible) {
+            nextAllowed(() => () => {
+                const ans = FloormapValidator(gridItemsRef.current)
+    
+                setError(ans)
+                return ans == "";
+            })
+        }
+    }, [ visible ])
 
     return (
         <form className="main" style={{ display: visible ? 'flex' : 'none' }}>
             <h2>Shop layout</h2>
 
             <div className="dnd-row">
-                <div draggable onDragStart={dragStartHandler} className="grid-item washer">
+                <div draggable onDragStart={dragStartHandler} className="grid-item washer-8 washer">
+                    <img src={washingMachine} alt="Washing Machine" />
+                    <span>Washer (8 kg)</span>
+                </div>
+                <div draggable onDragStart={dragStartHandler} className="grid-item washer-11 washer">
                     <img src={washingMachine} alt="Washing Machine" />
                     <span>Washer (11 kg)</span>
                 </div>
-                <div draggable onDragStart={dragStartHandler} className="grid-item dryer">
+                <div draggable onDragStart={dragStartHandler} className="grid-item dryer-18 dryer">
+                    <img src={washingMachine} alt="Drying Machine" />
+                    <span>Dryer (18 kg)</span>
+                </div>
+                <div draggable onDragStart={dragStartHandler} className="grid-item dryer-25 dryer">
                     <img src={washingMachine} alt="Drying Machine" />
                     <span>Dryer (25 kg)</span>
                 </div>

@@ -6,16 +6,18 @@ export default RadioButton;
 function _RadioButton({
     label,
     name,
-    value
+    value,
+    defaultChecked
 }: {
     label?: string;
     name: string;
     errorMessage?: string;
     value?: string;
+    defaultChecked?: boolean;
 }): ReactElement {
     return (
         <label className="cnr-label">
-            <input name={name} value={value} type="radio" />
+            <input name={name} defaultChecked={defaultChecked} value={value} type="radio" />
             <span>{ label }</span>
         </label>
     )
@@ -25,7 +27,7 @@ export function RadioButtonProvider({
     children,
     errorMessage,
 }: {
-    children: ReactElement,
+    children: ReactElement[],
     errorMessage?: string
 }): ReactElement {
     return (

@@ -5,13 +5,17 @@ import armchair from '../assets/armchair.svg'
 import space from '../assets/space.svg'
 
 export type GridItemModifyTypes = "wall" | "entrance" | "empty";
-export type GridItemType = GridItemModifyTypes | "washer" | "dryer" | "waiting" | "table";
+export type GridItemType = GridItemModifyTypes | "washer-8" | "washer-11" | "dryer-18" | "dryer-25" | "dryer" | "waiting" | "table";
 
 export const getTypeName = (itemType: GridItemType) => {
     switch (itemType) {
-        case "dryer":
+        case "dryer-18":
+            return "Dryer (18 kg)"
+        case "dryer-25":
             return "Dryer (25 kg)"
-        case "washer":
+        case "washer-8":
+            return "Washer (8 kg)"
+        case "washer-11":
             return "Washer (11 kg)"
         case "empty":
             return "Empty"
@@ -86,7 +90,7 @@ export default function GridItem({
             onDoubleClick={handleDoubleClick}
             onContextMenu={handleContextMenu}
 
-            className={`grid-item ${type}`}
+            className={`grid-item ${type} ${type.split('-')[0]}`}
             style={{
                 opacity: droppedOver ? 0.5 : 1,
                 cursor: droppedOver ? 'copy' : 'initial',
@@ -95,13 +99,13 @@ export default function GridItem({
         >
             <>
             {
-                type == "washer" && (
+                type.startsWith("washer") && (
                     <img src={washingMachine} alt="Washing Machine" />
                 )
             }
 
             {
-                type == "dryer" && (
+                type.startsWith("dryer") && (
                     <img src={washingMachine} alt="Drying Machine" />
                 )
             }

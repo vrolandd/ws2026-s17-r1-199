@@ -2,13 +2,17 @@ import maximize from './assets/maximize.svg'
 import check from './assets/check.svg'
 import InformationsScreen from './screens/1_Informations'
 import FloorPlanScreen from './screens/2_Floorplan'
-import { Dispatch, Fragment, MouseEvent, ReactElement, SetStateAction, useRef, useState } from 'react'
+import { Dispatch, Fragment, ReactElement, SetStateAction, useRef, useState } from 'react'
+import ServicesScreen from './screens/3_Services'
+import ExportScreen from './screens/4_Export'
 
 function GetScreen({ page, nextAllowed }: { page: number, nextAllowed: Dispatch<SetStateAction<() => boolean>> }): ReactElement {
     return (
         <>
         <InformationsScreen nextAllowed={nextAllowed} visible={page == 0} />
         <FloorPlanScreen nextAllowed={nextAllowed} visible={page == 1}/>
+        <ServicesScreen nextAllowed={nextAllowed} visible={page == 2}/>
+        <ExportScreen nextAllowed={nextAllowed} visible={page == 3}/>
         
         <main className='main' style={{ display: (page < 0 || page > 3) ? 'flex' : 'none' }}><h2>Missing screen.</h2></main>
         </>

@@ -255,8 +255,6 @@ hr {
 
 .grid {
   display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-columns: repeat(5, 1fr);
   border: 1px solid #bbb;
   border-radius: 2px;
   background-color: #fafbfc;
@@ -283,6 +281,7 @@ hr {
 }
 .grid-item * {
   pointer-events: none;
+  user-select: none; /*  Added this line in the hope of Safari won't outline the labels on click. I should give up trying to understand this.  */
 }
 .grid .grid-item {
   border-style: solid;
@@ -312,6 +311,12 @@ hr {
 .grid-item.empty {
   opacity: 0.75;
 }
+
+/* This was added for accessibility reasons. No matter how, but if we won't show "Entrance" or "Empty" there, that could be uncomfortable for disabled people by their screen readers being unable to tell them what is happening. I just hid the title to don't bother the original UI.  */
+.grid-item.empty, .grid-item.entrance {
+  color: transparent;
+}
+
 .dnd-row {
   display: flex;
   gap: 0.5rem;

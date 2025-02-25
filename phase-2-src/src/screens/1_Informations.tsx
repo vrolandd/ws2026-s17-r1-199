@@ -4,7 +4,7 @@ import Textarea from "../components/Textarea";
 import Select from "../components/Select";
 import useFormValidator from "../useFormValidator";
 
-export default function InformationsScreen({ nextAllowed }: { nextAllowed: Dispatch<SetStateAction<() => boolean>> }): ReactElement {
+export default function InformationsScreen({ nextAllowed, visible }: { nextAllowed: Dispatch<SetStateAction<() => boolean>>, visible: boolean }): ReactElement {
     const infoForm = useRef<HTMLFormElement | null>(null);
 
     const [ formErrors, checkInput, checkFormValues ] = useFormValidator({
@@ -75,7 +75,7 @@ export default function InformationsScreen({ nextAllowed }: { nextAllowed: Dispa
     }, [])
 
     return (
-        <form ref={infoForm} action="" className="main">
+        <form ref={infoForm} action="" className="main" style={{ display: visible ? 'flex' : 'none' }}>
             <h2>Information about the Location</h2>
                 
             <Input

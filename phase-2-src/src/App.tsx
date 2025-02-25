@@ -2,17 +2,17 @@ import maximize from './assets/maximize.svg'
 import check from './assets/check.svg'
 import InformationsScreen from './screens/1_Informations'
 import FloorPlanScreen from './screens/2_Floorplan'
-import { Dispatch, ReactElement, SetStateAction, useState } from 'react'
+import { Dispatch, Fragment, MouseEvent, ReactElement, SetStateAction, useRef, useState } from 'react'
 
 function GetScreen({ page, nextAllowed }: { page: number, nextAllowed: Dispatch<SetStateAction<() => boolean>> }): ReactElement {
-    switch (page) {
-        case 0:
-            return <InformationsScreen nextAllowed={nextAllowed} />
-        case 1:
-            return <FloorPlanScreen nextAllowed={nextAllowed} />
-        default:
-            return <p>Nincs ilyen screen.</p>
-    }
+    return (
+        <>
+        <InformationsScreen nextAllowed={nextAllowed} visible={page == 0} />
+        <FloorPlanScreen nextAllowed={nextAllowed} visible={page == 1}/>
+        
+        <main className='main' style={{ display: (page < 0 || page > 3) ? 'flex' : 'none' }}><h2>Missing screen.</h2></main>
+        </>
+    )
 }
 
 export default function App() {
@@ -20,31 +20,40 @@ export default function App() {
 
     const [ nextAllowed, setNextAllowed ] = useState<() => boolean>(() => () => false);
 
+    const containerRef = useRef<HTMLElement | null>(null);
+
+    const fullScreenHandler = () => {
+        containerRef.current?.requestFullscreen()
+    }
+
     return (
-        <article className="container">
+        <article className="container" ref={containerRef}>
             <header className="header">
                 <h1>Register a new location</h1>
                 <div className="steps">
                     {
                         [0, 1, 2, 3].map((step) => (
-                            <>
-                            <button
-                                onClick={() => { setPage(step) }}
-                                className={`step ${page > step ? 'done' : page == step ? 'current' : ''}`}
-                                disabled={page < step}
-                            >
-                                {
-                                    page > step ? <img src={check} alt="Check" /> : step + 1
-                                }
-                            </button>
+                            <Fragment key={step}>
+                                <button
+                                    onClick={() => { setPage(step) }}
+                                    className={`step ${page > step ? 'done' : page == step ? 'current' : ''}`}
+                                    disabled={page != step}
+                                >
+                                    {
+                                        page > step ? <img src={check} alt="Check" /> : step + 1
+                                    }
+                                </button>
 
-                            { step < 3 && <div className="step-divider"></div> }
-                            </>
+                                { step < 3 && <div className="step-divider"></div> }
+                            </Fragment>
                         ))
                     }
                 </div>
 
-                <button className="fullscreen-btn">
+                <button
+                    onClick={fullScreenHandler}
+                    className="fullscreen-btn"
+                >
                     <img src={maximize} alt="Maximize" />
                 </button>
             </header>

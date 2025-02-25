@@ -1,48 +1,60 @@
-import { Dispatch, DragEvent, ReactElement, SetStateAction, useRef, useState } from "react";
+import { Dispatch, DragEvent, ReactElement, SetStateAction, useEffect, useRef, useState } from "react";
 import washingMachine from '../assets/washing-machine.svg'
 import armchair from '../assets/armchair.svg'
 import space from '../assets/space.svg'
 import alert_icon from '../assets/alert.svg'
 import GridItem, { GridItemModifyTypes, GridItemType } from "../components/GridItem";
+import { Grid_Columns, Grid_Rows } from "../config";
+import { FloormapValidator } from "../tools";
 
-
-const Grid_Columns = 3,
-      Grid_Rows = 5;
-
-
-export default function FloorPlanScreen({ nextAllowed }: { nextAllowed: Dispatch<SetStateAction<() => boolean>> }): ReactElement {
+export default function FloorPlanScreen({ nextAllowed, visible }: { nextAllowed: Dispatch<SetStateAction<() => boolean>>, visible: boolean }): ReactElement {
+    const [ error, setError ] = useState<string>("");
+    
+    // This is going to store the item the user began to drag
     const draggedItem = useRef<HTMLDivElement | null>(null);
 
-    const [ gridItems, setGridItems ] = useState<GridItemType[]>(
+    const gridItemsRef = useRef<GridItemType[]>(
         Array(Grid_Columns * Grid_Rows).fill("empty")
     );
 
     const dragStartHandler = (e: DragEvent<HTMLDivElement>) => {
-        console.log(e)
-
+        // We set the dragged element as the draggedItem, to reuse it later
         draggedItem.current = e.currentTarget;
     }
 
-    const onDrop = (index: number) => {
+    const onDrop = (index: number): GridItemType => {
+        // Type safety, for example: if the user drops an image/text, or for some reason the dragStartHandler wasn't fired, this won't run either.
         if (draggedItem.current) {
-            console.log(draggedItem.current.className.split(' ')[1])
-            const newGridItems = [ ...gridItems ];
-            newGridItems[index] = draggedItem.current.className.split(' ')[1] as GridItemType;
-
-            setGridItems(newGridItems);
+            const newType = draggedItem.current.className.split(' ')[1] as GridItemType;
+            gridItemsRef.current[index] = newType;
+            return newType;
         }
+        
+        return "empty"
     }
 
-    const onType = (index: number, newType: GridItemModifyTypes) => {
-        const newGridItems = [ ...gridItems ];
+    const onType = (index: number, newType: GridItemModifyTypes): GridItemModifyTypes => {
+        const newGridItems = [ ...gridItemsRef.current ];
         newGridItems[index] = newType;
 
-        setGridItems(newGridItems);
+        gridItemsRef.current = newGridItems;
+
+        return newType;
     }
 
+    useEffect(() => {
+        nextAllowed(() => () => {
+            const ans = FloormapValidator(gridItemsRef.current)
+
+            setError(ans)
+            return ans == "";
+        })
+    }, [])
 
     return (
-        <form className="main">
+        <form className="main" style={{ display: visible ? 'flex' : 'none' }}>
+            <h2>Shop layout</h2>
+
             <div className="dnd-row">
                 <div draggable onDragStart={dragStartHandler} className="grid-item washer">
                     <img src={washingMachine} alt="Washing Machine" />
@@ -62,6 +74,16 @@ export default function FloorPlanScreen({ nextAllowed }: { nextAllowed: Dispatch
                 </div>
             </div>
 
+            {
+                error != '' && (
+                    <div className="alert">
+                        <img src={alert_icon} alt="Alert" />
+                        <span>{ error }</span>
+                    </div>
+                )
+            }
+            
+
             <div
                 className="grid"
                 style={{
@@ -70,23 +92,16 @@ export default function FloorPlanScreen({ nextAllowed }: { nextAllowed: Dispatch
                 }}
             >
                 {
-                    gridItems.map((item, index) => (
+                    gridItemsRef.current.map((item, index) => (
                         <GridItem
-                            key={item + index}
+                            key={index}
                             index={index}
                             onDrop={onDrop}
                             onType={onType}
-                            type={item}
+                            defaultType={item}
                         />
                     ))
                 }
-            </div>
-
-            <hr />
-
-            <div className="alert">
-                <img src={alert_icon} alt="Alert" />
-                <span>This is an error message.</span>
             </div>
         </form>
     )

@@ -2,7 +2,7 @@ import maximize from './assets/maximize.svg'
 import check from './assets/check.svg'
 import InformationsScreen from './screens/1_Informations'
 import FloorPlanScreen from './screens/2_Floorplan'
-import { Dispatch, ReactElement, SetStateAction, useRef, useState } from 'react'
+import { Dispatch, ReactElement, SetStateAction, useState } from 'react'
 
 function GetScreen({ page, nextAllowed }: { page: number, nextAllowed: Dispatch<SetStateAction<() => boolean>> }): ReactElement {
     switch (page) {
@@ -16,7 +16,7 @@ function GetScreen({ page, nextAllowed }: { page: number, nextAllowed: Dispatch<
 }
 
 export default function App() {
-    const [ page, setPage ] = useState<number>(0);
+    const [ page, setPage ] = useState<number>(1);
 
     const [ nextAllowed, setNextAllowed ] = useState<() => boolean>(() => () => false);
 

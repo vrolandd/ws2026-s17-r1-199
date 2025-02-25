@@ -54,7 +54,7 @@ export default function FloorPlanScreen({ nextAllowed, visible }: { nextAllowed:
     }, [ visible ])
 
     return (
-        <form className="main" style={{ display: visible ? 'flex' : 'none' }}>
+        <form className="main" name="floorplan" style={{ display: visible ? 'flex' : 'none' }}>
             <h2>Shop layout</h2>
 
             <div className="dnd-row">

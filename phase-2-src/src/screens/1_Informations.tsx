@@ -92,7 +92,7 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
     }, [ visible ])
 
     return (
-        <form ref={infoForm} action="" className="main" style={{ display: visible ? 'flex' : 'none' }}>
+        <form ref={infoForm} action="" className="main" name="informations" style={{ display: visible ? 'flex' : 'none' }}>
             <h2>Information about the Location</h2>
                 
             <Input

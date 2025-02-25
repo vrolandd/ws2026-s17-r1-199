@@ -20,7 +20,7 @@ function GetScreen({ page, nextAllowed }: { page: number, nextAllowed: Dispatch<
 }
 
 export default function App() {
-    const [ page, setPage ] = useState<number>(1);
+    const [ page, setPage ] = useState<number>(0);
 
     const [ nextAllowed, setNextAllowed ] = useState<() => boolean>(() => () => false);
 
@@ -44,7 +44,7 @@ export default function App() {
                                     disabled={page != step}
                                 >
                                     {
-                                        page > step ? <img src={check} alt="Check" /> : step + 1
+                                        page == 3 ? <img src={check} alt="Check" /> : step + 1
                                     }
                                 </button>
 
@@ -64,20 +64,24 @@ export default function App() {
 
             <GetScreen nextAllowed={setNextAllowed} page={page} />
 
-
-            <footer className="footer">
-                <button className="btn" disabled={page == 0} onClick={() => { setPage(page - 1) }}>
-                    Back
-                </button>
-                <button
-                    className="btn"
-                    onClick={() => {
-                        if (nextAllowed()) {
-                            setPage(page + 1)
-                        }
-                    }}
-                >Next</button>
-            </footer>
+            {
+                page < 3 && (
+                    <footer className="footer">
+                        <button className="btn" disabled={page == 0} onClick={() => { setPage(page - 1) }}>
+                            Back
+                        </button>
+                        <button
+                            className="btn"
+                            onClick={() => {
+                                if (nextAllowed()) {
+                                    setPage(page + 1)
+                                }
+                            }}
+                        >Next</button>
+                    </footer>
+                )
+            }
+            
         </article>
     );
 }

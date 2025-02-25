@@ -8,7 +8,7 @@ export default function ServicesScreen({ nextAllowed, visible }: { nextAllowed: 
     }, [ visible ])
     
     return (
-        <form action="" className="main" style={{ display: visible ? 'flex' : 'none' }}>
+        <form action="" name="services" className="main" style={{ display: visible ? 'flex' : 'none' }}>
             <h2>Amenities and Services</h2>
 
             <Checkbox

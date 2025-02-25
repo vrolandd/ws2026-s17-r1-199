@@ -7,5 +7,7 @@ export default defineConfig({
   build: {
     outDir: '../phase-2',
     emptyOutDir: true,
-  }
+    assetsDir: './assets',
+  },
+  base: '/phase-2/'
 })

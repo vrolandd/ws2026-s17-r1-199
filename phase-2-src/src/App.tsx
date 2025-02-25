@@ -1,4 +1,5 @@
 import maximize from './assets/maximize.svg'
+import minimize from './assets/minimize.svg'
 import check from './assets/check.svg'
 import InformationsScreen from './screens/1_Informations'
 import FloorPlanScreen from './screens/2_Floorplan'
@@ -23,11 +24,18 @@ export default function App() {
     const [ page, setPage ] = useState<number>(0);
 
     const [ nextAllowed, setNextAllowed ] = useState<() => boolean>(() => () => false);
+    const [ inFullscreen, setInFullscreen ] = useState<boolean>(false);
 
     const containerRef = useRef<HTMLElement | null>(null);
 
-    const fullScreenHandler = () => {
-        containerRef.current?.requestFullscreen()
+    const fullScreenHandler = async() => {
+        if (inFullscreen) {
+            document.exitFullscreen()
+        } else {
+            await containerRef.current?.requestFullscreen()
+        }
+
+        setInFullscreen(!inFullscreen)
     }
 
     return (
@@ -58,7 +66,9 @@ export default function App() {
                     onClick={fullScreenHandler}
                     className="fullscreen-btn"
                 >
-                    <img src={maximize} alt="Maximize" />
+                    {
+                        inFullscreen ? <img src={minimize} alt="Minimize" /> : <img src={maximize} alt="Maximize" />
+                    }
                 </button>
             </header>
 

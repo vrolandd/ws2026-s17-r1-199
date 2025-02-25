@@ -78,15 +78,11 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
         if (visible) {
             nextAllowed(() => () => {
                 if (!infoForm.current) return false;
+                submittedTimes.current = submittedTimes.current + 1;
+
                 const errors = checkFormValues(infoForm.current);
 
-                submittedTimes.current++;
-
-                if (submittedTimes.current == 1) {
-                    checkFormValues(infoForm.current);
-                }
-
-                return submittedTimes.current != 1 && Object.entries(errors).map(x => x[1]).filter(x => x != "").length == 0;
+                return Object.entries(errors).map(x => x[1]).filter(x => x != "").length == 0;
             })
         }
     }, [ visible ])

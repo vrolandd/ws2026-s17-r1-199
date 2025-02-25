@@ -7,10 +7,13 @@ import useFormValidator from "../useFormValidator";
 export default function InformationsScreen({ nextAllowed, visible }: { nextAllowed: Dispatch<SetStateAction<() => boolean>>, visible: boolean }): ReactElement {
     const infoForm = useRef<HTMLFormElement | null>(null);
 
+    const submittedTimes = useRef<number>(0);
+
     const [ formErrors, checkInput, checkFormValues ] = useFormValidator({
         inputs: {
             sudsyname: {
                 isValid: (value: string) => {
+                    if (submittedTimes.current == 0) return;
                     if (value.length < 3) {
                         return 'Name must be at least 3 characters long.'
                     } else if (value.length > 32) {
@@ -20,6 +23,7 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
             },
             description: {
                 isValid: (value: string) => {
+                    if (submittedTimes.current == 0) return;
                     if (value.length < 10) {
                         return 'Description must be at least 10 characters long.'
                     } else if (value.length > 256) {
@@ -29,6 +33,7 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
             },
             postalCode: {
                 isValid: (value: string) => {
+                    if (submittedTimes.current == 0) return;
                     if (value.length != 4) {
                         return 'Postal code must be exactly 4 characters long.'
                     }
@@ -36,6 +41,7 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
             },
             city: {
                 isValid: (value: string) => {
+                    if (submittedTimes.current == 0) return;
                     if (value.length < 3) {
                         return 'Name must be at least 3 characters long.'
                     } else if (value.length > 32) {
@@ -45,6 +51,7 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
             },
             address: {
                 isValid: (value: string) => {
+                    if (submittedTimes.current == 0) return;
                     if (value.length < 5) {
                         return 'Address must be at least 5 characters long.'
                     } else if (value.length > 128) {
@@ -54,11 +61,13 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
             },
             from: {
                 isValid: (value: string) => {
+                    if (submittedTimes.current == 0) return;
                     return value == "" ? 'Required' : ''
                 }
             },
             to: {
                 isValid: (value: string) => {
+                    if (submittedTimes.current == 0) return;
                     return value == "" ? 'Required' : ''
                 }
             }
@@ -71,7 +80,13 @@ export default function InformationsScreen({ nextAllowed, visible }: { nextAllow
                 if (!infoForm.current) return false;
                 const errors = checkFormValues(infoForm.current);
 
-                return Object.entries(errors).map(x => x[1]).filter(x => x != "").length == 0;
+                submittedTimes.current++;
+
+                if (submittedTimes.current == 1) {
+                    checkFormValues(infoForm.current);
+                }
+
+                return submittedTimes.current != 1 && Object.entries(errors).map(x => x[1]).filter(x => x != "").length == 0;
             })
         }
     }, [ visible ])
